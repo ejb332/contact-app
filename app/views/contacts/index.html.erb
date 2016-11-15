@@ -1,0 +1,13 @@
+<h1>Contacts</h1>
+<div class="main">
+<% @contacts.each do |contact| %>
+  <h2><%= contact.name %></h2>
+  <p>Age: <%= contact.age %></p>
+  <p>Gender: <%= contact.gender %></p>
+  <p>Exact geographical coordinates of diary: <%= contact.diary %></p>
+</div>
+<% end %>
+<br>
+<div class="btn btn-primary">
+  <a href="/contacts/new">Add new contact</a>
+</div>
