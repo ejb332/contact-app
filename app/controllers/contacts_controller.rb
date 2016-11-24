@@ -1,6 +1,10 @@
 class ContactsController < ApplicationController
   def index
-    @contacts = Contact.all
+    if current_user
+      @contacts = current_user.contacts
+    else
+      @contacts = "/login"
+    end
     render "index.html.erb"
   end
 
@@ -10,13 +14,16 @@ class ContactsController < ApplicationController
 
   def create
     contact = Contact.new(
-    name: params[:name],
+    first_name: params[:first_name],
+    middle_name: params[:middle_name],
+    last_name: params[:last_name],
     age: params[:age],
     gender: params[:gender],
-    diary: params[:diary]
+    diary: params[:diary],
+    user_id: current_user.id
     )
     contact.save
-    render "create.html.erb"
+    redirect_to "/contacts"
   end
 
   def show
@@ -33,18 +40,24 @@ class ContactsController < ApplicationController
 
   def update
     contact_id = params[:id]
-    @contact = Contact.find_by(id: contact_id)
-    @contact.name = params[:name]
-    @contact.age = params[:age]
-    @contact.gender = params[:gender]
-    @contact.diary = params[:diary]
+    contact = Contact.find_by(id: contact_id)
+    contact.first_name = params[:first_name]
+    contact.middle_name = params[:middle_name]
+    contact.last_name = params[:last_name]
+    contact.age = params[:age]
+    contact.gender = params[:gender]
+    contact.diary = params[:diary]
     contact.save
-    render "update.html.erb"
+    redirect_to "/contact/#{contact.id}"
   end
 
   def destroy
     contact_id = params[:id]
     @contact = Contact.find_by(id: contact_id)
     render "destroy.html.erb"
+  end
+
+  def all_johns
+    render "all_johns.html.erb"
   end
 end

@@ -1,4 +1,7 @@
-<h2><%= @contact.name %></h2>
+<h2><%= @contact.first_name %></h2>
+<h2><%= @contact.last_name %></h2>
 <p><%= @contact.age %></p>
 <p><%= @contact.gender %><p>
 <p><%= @contact.diary %></p>
+<div class="btn btn-success">
+  <%= link_to "Delete", "/contacts/#{@contact.id}", method: :delete %>
